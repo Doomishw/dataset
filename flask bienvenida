@@ -1,0 +1,29 @@
+from flask import Flask, render_template, request
+
+app = Flask(__name__)
+
+# Ruta principal
+@app.route('/')
+def inicio():
+    return '<h1>Bienvenido a la aplicación sencilla en Flask</h1>'
+
+# Ruta con parámetros en la URL
+@app.route('/saludar/<nombre>')
+def saludar(nombre):
+    return f'<h2>Hola, {nombre}!</h2>'
+
+# Ruta usando método POST y GET
+@app.route('/formulario', methods=['GET', 'POST'])
+def formulario():
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        return f'<h2>Formulario enviado correctamente. Hola, {nombre}!</h2>'
+    return '''
+        <form method="post">
+            Nombre: <input type="text" name="nombre">
+            <input type="submit" value="Enviar">
+        </form>
+    '''
+
+if __name__ == '__main__':
+    app.run(debug=True)
